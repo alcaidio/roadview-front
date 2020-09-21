@@ -1,0 +1,47 @@
+.container {
+  height: 100vh;
+}
+
+.viewer {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.map {
+  height: 300px;
+  width: 400px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0.9;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 9;
+  transition: all 200ms ease-out;
+}
+
+.map:hover {
+  transition: all 200ms ease-in;
+  height: 300px;
+  width: 400px;
+  opacity: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .map {
+    height: 25%;
+    width: 95%;
+    opacity: 1;
+  }
+
+  // .map:hover {
+  //   transition: all 200ms ease-in;
+  //   height: 20%;
+  //   width: 95%;
+  //   opacity: 1;
+  // }
+}

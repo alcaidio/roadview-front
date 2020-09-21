@@ -1,0 +1,7 @@
+https://github.com/Asymmetrik/ngx-leaflet-markercluster/blob/master/src/demo/app/leaflet-markercluster/markercluster-demo.component.ts
+
+Doc for cluster 
+https://github.com/Leaflet/Leaflet.markercluster
+
+Doc ngx leaflet
+https://github.com/Asymmetrik/ngx-leaflet
