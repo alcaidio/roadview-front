@@ -1,19 +1,21 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { MarzipanoService } from 'src/app/services/marzipano.service';
-import { PanoramaService } from 'src/app/services/panorama.service';
-import { ViewerService } from 'src/app/services/viewer.service';
+import {
+  degreesToRadians,
+  radiansToDegrees,
+} from 'src/app/shared/utils/angle-conversion';
+import { createLogo } from 'src/app/shared/utils/hotspot';
 import { Hotspot, Panorama } from '../../models/panorama.model';
-import { degreesToRadians } from '../../shared/angle-conversion';
-import { radiansToDegrees } from './../../shared/angle-conversion';
-import { createLogo } from './../../shared/hotspot';
+import { MarzipanoService } from '../../services/marzipano.service';
+import { PanoramaService } from '../../services/panorama.service';
+import { ViewerService } from '../../services/viewer.service';
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.scss'],
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.scss'],
 })
-export class ViewerComponent implements OnInit, OnDestroy {
+export class ViewComponent implements OnInit, OnDestroy {
   panorama: Panorama;
   subs: Subscription;
   viewer: any;

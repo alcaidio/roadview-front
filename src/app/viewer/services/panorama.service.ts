@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Panorama } from '../models/panorama.model';
-import { environment } from './../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { PanoramaList } from './../models/panorama.model';
 
 @Injectable({

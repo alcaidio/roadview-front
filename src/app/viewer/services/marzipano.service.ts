@@ -4,8 +4,8 @@ import { Hotspot } from '../models/panorama.model';
 import {
   degreesToRadians,
   radiansToDegrees,
-} from './../shared/angle-conversion';
-import { createHotspot } from './../shared/hotspot';
+} from './../../shared/utils/angle-conversion';
+import { createHotspot } from './../../shared/utils/hotspot';
 
 @Injectable({
   providedIn: 'root',

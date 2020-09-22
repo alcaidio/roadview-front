@@ -1,0 +1,41 @@
+.container {
+  // -55 because of mat-toolbar
+  height: calc(100% - 55px);
+  position: relative;
+}
+
+.view {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.map {
+  background: red;
+  margin-top: 200px;
+  height: 300px;
+  width: 400px;
+  margin: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0.9;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 9;
+  transition: all 300ms ease-out;
+}
+
+.map:hover {
+  transition: all 200ms ease-in;
+  height: 300px;
+  width: 400px;
+  opacity: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .map {
+    height: 25%;
+    width: 95%;
+    opacity: 1;
+  }
+}
