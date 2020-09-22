@@ -1,0 +1,46 @@
+<app-page title="Connexion">
+  <mat-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field [color]="email.valid && 'accent'">
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          autocomplete="off"
+        />
+
+        <mat-error *ngIf="email.invalid && email.dirty">
+          Voud devez entrer une adresse email valide.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field [color]="email.valid && 'accent'">
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          placeholder="Mot de passe"
+          autocomplete="off"
+        />
+
+        <mat-error *ngIf="password.invalid && password.dirty">
+          Le mot de passe doit contenir au moins 6 caractères !
+        </mat-error>
+      </mat-form-field>
+
+      <mat-error class="server-error">{{ serverMessage }}</mat-error>
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="form.invalid || loading"
+      >
+        Envoyer
+      </button>
+    </form>
+
+    <a (click)="onClick()">Mot de passe oublié ?</a>
+  </mat-card>
+</app-page>

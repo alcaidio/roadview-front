@@ -9,13 +9,22 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
-      <a mat-list-item routerLink="/login" (click)="drawer.close()">Login</a>
-      <a mat-list-item routerLink="/kanban" (click)="drawer.close()"
-        >Kanban Demo</a
+      <a mat-list-item routerLink="/" (click)="drawer.close()">🏠 Home</a>
+      <a mat-list-item routerLink="/viewer" (click)="drawer.close()"
+        >🎥 Viewer</a
       >
-      <a mat-list-item routerLink="/customers" (click)="drawer.close()"
-        >SSR Demo</a
+      <a
+        mat-list-item
+        routerLink="/auth/login"
+        (click)="drawer.close()"
+        *ngIf="!(afAuth.authState | async)"
+        >🔑 Login</a
+      >
+      <a
+        *ngIf="afAuth.authState | async"
+        mat-list-item
+        (click)="onSignOut(drawer)"
+        >🏴‍☠️ Se déconnecter</a
       >
     </mat-nav-list>
   </mat-sidenav>
@@ -30,28 +39,35 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="logo" routerLink="/">Imerview</span>
+      <span class="logo" routerLink="/"
+        >Immergis roadview<span class="beta">(bêta)</span></span
+      >
 
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
-        <a mat-button routerLink="/">🍱 Some link</a>
-        <a mat-button routerLink="/">⚡ Some link</a>
-
-        <!-- <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)"
-            >🔑 Login</a
-          >
-          <a
-            mat-button
-            routerLink="/login"
-            *ngIf="afAuth.authState | async as user"
-          >
-            <img
-              class="avatar"
-              [src]="user.photoURL || 'assets/default-user.svg'"
-            />
-            Profile
-          </a> -->
+        <a mat-button routerLink="/home">🏠 Home</a>
+        <a mat-button routerLink="/viewer" routerLinkActive="active"
+          >🎥 Viewer</a
+        >
       </div>
+      <a
+        mat-button
+        routerLink="/auth/login"
+        routerLinkActive="active"
+        *ngIf="!(afAuth.authState | async)"
+        >🔑 Login</a
+      >
+      <!-- <a
+        mat-button
+        routerLink="/auth/login"
+        *ngIf="afAuth.authState | async as user"
+      >
+        <img
+          class="avatar"
+          [src]="user.photoURL || 'assets/default-user.svg'"
+        />
+        Profile
+      </a> -->
 
       <button
         mat-icon-button
@@ -66,6 +82,17 @@
           <i>🏢</i>
           <span>A propos d'Immergis</span>
         </a>
+        <ng-container *ngIf="afAuth.authState | async as user">
+          <a mat-menu-item (click)="onSignOut()">
+            <i>🏴‍☠️</i>
+            <span>Se déconnecter</span>
+          </a>
+          <mat-divider></mat-divider>
+          <a mat-menu-item id="email">
+            <i>🙎‍♀️</i>
+            <span>{{ user.email }}</span>
+          </a>
+        </ng-container>
       </mat-menu>
     </mat-toolbar>
 

@@ -11,6 +11,16 @@ export const environment = {
     token:
       'pk.eyJ1IjoidGltb3RoeTM0IiwiYSI6ImNrZWNycHFkdDBsazcyem1pOW8yeDFydmcifQ.3MeiDeCkzuunsCpB9tzfBw',
   },
+  firebase: {
+    apiKey: 'AIzaSyBPbdv0573vhlzx11NwuEK4XqfviPOMPWM',
+    authDomain: 'immerview.firebaseapp.com',
+    databaseURL: 'https://immerview.firebaseio.com',
+    projectId: 'immerview',
+    storageBucket: 'immerview.appspot.com',
+    messagingSenderId: '329032125566',
+    appId: '1:329032125566:web:5fba286c0278d70f941c2f',
+    measurementId: 'G-K2QGP4DSRF',
+  },
 };
 
 /*

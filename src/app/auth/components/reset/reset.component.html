@@ -1,0 +1,27 @@
+<app-page title="Mot de passe oublié">
+  <mat-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field [color]="email.valid && 'accent'">
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          autocomplete="off"
+        />
+
+        <mat-error *ngIf="email.invalid && email.dirty">
+          Vous devez entrer un email valid
+        </mat-error>
+      </mat-form-field>
+
+      <mat-error class="server-error">{{ serverMessage }}</mat-error>
+
+      <button mat-stroked-button type="submit" [disabled]="loading">
+        Réinitialiser son mot de passe
+      </button>
+    </form>
+
+    <button mat-button (click)="onClick()">Login ?</button>
+  </mat-card>
+</app-page>
