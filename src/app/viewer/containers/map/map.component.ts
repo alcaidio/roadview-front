@@ -12,10 +12,10 @@ import {
 import 'leaflet-rotatedmarker';
 import 'leaflet.markercluster';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { PanoramaList } from '../../models/panorama.model';
 import { PanoramaService } from '../../services/panorama.service';
 import { ViewerService } from '../../services/viewer.service';
-import { environment } from './../../../../environments/environment';
-import { PanoramaList } from './../../models/panorama.model';
 
 @Component({
   selector: 'app-map',

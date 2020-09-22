@@ -24,7 +24,7 @@
     "@asymmetrik/ngx-leaflet": "^8.1.0",
     "@types/leaflet-rotatedmarker": "^0.2.1",
     "@types/leaflet.markercluster": "^1.4.2",
-    "leaflet": "^1.6.0",
+    "leaflet": "^1.7.1",
     "leaflet-rotatedmarker": "^0.2.0",
     "leaflet.markercluster": "^1.4.1",
     "marzipano": "^0.9.1",

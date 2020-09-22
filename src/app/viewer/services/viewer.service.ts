@@ -7,23 +7,22 @@ import { Panorama } from '../models/panorama.model';
 })
 export class ViewerService {
   // // Just an example to load
-  // default: PointView = {
-  //   geometry: {
-  //     type: 'Point',
-  //     coordinates: [4.86112472, 45.7703275378],
-  //   },
-  //   properties: {
-  //     chemin:
-  //       'http://192.168.0.147/pcrs/MdL/Photos_360/2019-12-31/stream_00007-000000_10898_0053352.jpg',
-  //     color: '#dcbe44',
-  //     date: '2019-12-31',
-  //     direction: 76.775588,
-  //     nom_img: 'stream_00007-000000_10898_0053352.jpg',
-  //     timestamp: 1577802485197,
-  //   },
-  // };
+  default: Panorama = {
+    id: 1,
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [4.86112472, 45.7703275378],
+    },
+    properties: {
+      image:
+        'http://192.168.0.147/pcrs/MdL/Photos_360/2019-12-31/stream_00007-000000_10898_0053352.jpg',
+      direction: 76.775588,
+      timestamp: 1577802485197,
+    },
+  };
 
-  private subject = new BehaviorSubject<Panorama>(null);
+  private subject = new BehaviorSubject<Panorama>(this.default);
   private rotation = new Subject<number>();
 
   constructor() {}
