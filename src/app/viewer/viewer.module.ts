@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -14,9 +13,8 @@ export const VIEWER_ROUTES: Routes = [{ path: '', component: ViewerComponent }];
   declarations: [ViewComponent, ViewerComponent, MapComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
-    LeafletModule,
     SharedModule,
+    LeafletModule,
     RouterModule.forChild(VIEWER_ROUTES),
   ],
 })
