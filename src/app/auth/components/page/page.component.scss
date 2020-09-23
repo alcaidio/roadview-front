@@ -11,3 +11,9 @@ button {
 .logout {
   padding-top: 5em;
 }
+
+@media screen and (max-width: 600px) {
+  main {
+    margin: 0 8px 0 8px;
+  }
+}

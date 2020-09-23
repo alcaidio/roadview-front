@@ -1,0 +1,22 @@
+<ng-container *ngIf="panorama$ | async">
+  <div class="flex-container">
+    <div class="button-container">
+      <button
+        class="button"
+        mat-raised-button
+        aria-label="Aller à la photo suivante"
+      >
+        <mat-icon>keyboard_arrow_up</mat-icon>
+      </button>
+    </div>
+    <div class="button-container">
+      <button
+        class="button"
+        mat-raised-button
+        aria-label="Aller à la photo précèdente"
+      >
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-container>

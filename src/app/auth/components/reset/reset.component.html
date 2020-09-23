@@ -15,7 +15,8 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-error class="server-error">{{ serverMessage }}</mat-error>
+      <mat-error class="server-error">{{ serverErrorMessage }}</mat-error>
+      <mat-hint class="server-ok">{{ serverOkMessage }}</mat-hint>
 
       <button mat-stroked-button type="submit" [disabled]="loading">
         Réinitialiser son mot de passe

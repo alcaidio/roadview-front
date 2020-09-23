@@ -27,6 +27,7 @@ export class MapComponent implements OnInit {
   token = environment.mapbox.token;
   panoramas$: Observable<PanoramaList>;
   options: any;
+  start = false;
 
   base = tileLayer(
     `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${this.token}`,
@@ -45,12 +46,12 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.panoramas$ = this.panoramaService.getAllPanoramasWithLimit(20000);
+    this.panoramas$ = this.panoramaService.getAllPanoramas();
     // add base layer to the map (option in html)
     this.options = {
       layers: [this.base],
-      zoom: 15,
-      center: latLng(45.79033580907452, 4.840034356839148),
+      zoom: 16,
+      center: latLng(48.53114444443002, 7.689522222222226),
       zoomControl: false,
     };
   }
@@ -103,7 +104,10 @@ export class MapComponent implements OnInit {
       } else {
         map.flyTo(e.latlng, map.getZoom());
       }
-      console.log(e.sourceTarget.feature);
+
+      if (!this.start) {
+        this.start = true;
+      }
 
       this.viewService.loadPanorama(e.sourceTarget.feature);
       displayCamera(e);
@@ -125,12 +129,12 @@ export class MapComponent implements OnInit {
         spiderfyOnMaxZoom: false,
         showCoverageOnHover: false,
         removeOutsideVisibleBounds: true,
-        disableClusteringAtZoom: 18,
+        disableClusteringAtZoom: 15,
 
         iconCreateFunction(cluster) {
           return divIcon({
             html: `<div>${cluster.getChildCount()}</div>`,
-            className: 'cluster',
+            className: 'clusters',
           });
         },
       });

@@ -16,7 +16,7 @@ import { ViewerService } from '../../services/viewer.service';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnInit, OnDestroy {
-  panorama: Panorama;
+  panorama$: Observable<Panorama>;
   subs: Subscription;
   viewer: any;
   scene: any;
@@ -36,17 +36,19 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.viewer = this.marzipano.initialize(document.querySelector('#viewer'));
 
     // subscribe to the panorama, when user click on a point on the map a panorama is submitted with loadFeature()
-    this.subs = this.viewService.getPanorama().subscribe((panorama) => {
+    this.panorama$ = this.viewService.getPanorama();
+
+    this.subs = this.panorama$.subscribe((panorama) => {
       if (panorama) {
         this.scene = this.loadScene(panorama);
         this.panoramaService.getOnePanorama(panorama.id);
         this.addHotspotLogo();
+        // track if the viewer view change
+        this.elementRef.nativeElement
+          .querySelector('#viewer')
+          .addEventListener('mousemove', this.onMouseMove.bind(this));
       }
     });
-    // track if the viewer view change
-    this.elementRef.nativeElement
-      .querySelector('#viewer')
-      .addEventListener('mousemove', this.onMouseMove.bind(this));
   }
 
   private loadScene(panorama: Panorama) {

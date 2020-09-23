@@ -22,7 +22,7 @@ export class ViewerService {
     },
   };
 
-  private subject = new BehaviorSubject<Panorama>(this.default);
+  private subject = new BehaviorSubject<Panorama>(null);
   private rotation = new Subject<number>();
 
   constructor() {}

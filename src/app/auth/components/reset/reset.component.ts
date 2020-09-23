@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 export class ResetComponent implements OnInit {
   form: FormGroup;
   loading = false;
-  serverMessage: string;
+  serverErrorMessage: string;
+  serverOkMessage: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -39,9 +40,10 @@ export class ResetComponent implements OnInit {
 
     try {
       await this.afAuth.sendPasswordResetEmail(email);
-      this.serverMessage = 'Check your email';
+      this.serverOkMessage =
+        'Vous allez recevoir un email de réinitialisation dans quelque secondes. 🎉';
     } catch (err) {
-      this.serverMessage = err;
+      this.serverErrorMessage = err;
     }
 
     this.loading = false;
