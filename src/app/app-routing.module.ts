@@ -1,6 +1,17 @@
 import { NgModule } from '@angular/core';
+import {
+  canActivate,
+  hasCustomClaim,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/auth-guard';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/guards/auth.guard';
+
+// TODO : add admin route (dashboard for example)
+const adminOnly = () => hasCustomClaim('admin');
+const redirectUnauthorizedToLogin = () =>
+  redirectUnauthorizedTo(['auth/login']);
+const redirectLoggedInToViewer = () => redirectLoggedInTo(['viewer']);
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,11 +23,12 @@ const routes: Routes = [
     path: 'viewer',
     loadChildren: () =>
       import('./viewer/viewer.module').then((m) => m.ViewerModule),
-    canActivate: [AuthGuard],
+    ...canActivate(redirectUnauthorizedToLogin),
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    ...canActivate(redirectLoggedInToViewer),
   },
 ];
 @NgModule({

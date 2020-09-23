@@ -20,7 +20,7 @@ export class SnackService {
   }
 
   connected() {
-    this.snackBar.open('Heureux de vous revoir !', 'X', {
+    this.snackBar.open('Heureux de vous revoir 😍 !', 'X', {
       duration: 5000,
     });
   }
