@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "immerview2": {
+    "roadview": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/immerview2",
+            "outputPath": "dist/roadview",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "immerview2:build"
+            "browserTarget": "roadview:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "immerview2:build:production"
+              "browserTarget": "roadview:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "immerview2:build"
+            "browserTarget": "roadview:build"
           }
         },
         "test": {
@@ -105,16 +105,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "immerview2:serve"
+            "devServerTarget": "roadview:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "immerview2:serve:production"
+              "devServerTarget": "roadview:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "immerview2"
+  "defaultProject": "roadview"
 }

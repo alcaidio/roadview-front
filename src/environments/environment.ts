@@ -12,14 +12,14 @@ export const environment = {
       'pk.eyJ1IjoidGltb3RoeTM0IiwiYSI6ImNrZWNycHFkdDBsazcyem1pOW8yeDFydmcifQ.3MeiDeCkzuunsCpB9tzfBw',
   },
   firebase: {
-    apiKey: 'AIzaSyBPbdv0573vhlzx11NwuEK4XqfviPOMPWM',
-    authDomain: 'immerview.firebaseapp.com',
-    databaseURL: 'https://immerview.firebaseio.com',
-    projectId: 'immerview',
-    storageBucket: 'immerview.appspot.com',
-    messagingSenderId: '329032125566',
-    appId: '1:329032125566:web:5fba286c0278d70f941c2f',
-    measurementId: 'G-K2QGP4DSRF',
+    apiKey: 'AIzaSyCosykb-Btr2HrVu5bH2OWZmCSxqrbTyfI',
+    authDomain: 'immergis-roadview.firebaseapp.com',
+    databaseURL: 'https://immergis-roadview.firebaseio.com',
+    projectId: 'immergis-roadview',
+    storageBucket: 'immergis-roadview.appspot.com',
+    messagingSenderId: '626137211024',
+    appId: '1:626137211024:web:9865cbb39d422464273815',
+    measurementId: 'G-VZK27G8KNB',
   },
 };
 

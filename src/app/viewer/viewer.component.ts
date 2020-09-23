@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Panorama } from './models/panorama.model';
+import { ViewerService } from './services/viewer.service';
 
 @Component({
   selector: 'app-viewer',
@@ -7,6 +10,10 @@ import { Component, OnInit } from '@angular/core';
     <div class="container">
       <div class="map">
         <app-map></app-map>
+        <div class="no" *ngIf="!(panorama$ | async)">
+          <mat-icon class="fleche">arrow_upward</mat-icon>Sélectionnez une image
+          en cliquant sur un point de la carte 🤓
+        </div>
       </div>
       <div class="view">
         <app-view></app-view>
@@ -21,7 +28,10 @@ import { Component, OnInit } from '@angular/core';
   `,
 })
 export class ViewerComponent implements OnInit {
-  constructor() {}
+  panorama$: Observable<Panorama>;
+  constructor(private viewerService: ViewerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.panorama$ = this.viewerService.getPanorama();
+  }
 }

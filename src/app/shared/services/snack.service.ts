@@ -8,7 +8,7 @@ export class SnackService {
   constructor(private snackBar: MatSnackBar) {}
 
   authError() {
-    this.snackBar.open('Vous devez être authentifié ☝️ ', 'OK', {
+    this.snackBar.open('Vous devez être authentifié 👮🏻‍♂️', 'OK', {
       duration: 5000,
     });
   }
@@ -20,7 +20,7 @@ export class SnackService {
   }
 
   connected() {
-    this.snackBar.open('Heureux de vous revoir 😍 !', 'X', {
+    this.snackBar.open('Heureux de vous revoir 😍 !', 'Merci', {
       duration: 5000,
     });
   }

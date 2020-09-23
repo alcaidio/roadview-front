@@ -44,7 +44,9 @@ export class MarzipanoService {
     // view.setPitch(degreesToRadians(pitch));
     // view.setFov(degreesToRadians(fov));
 
-    scene.switchTo();
+    scene.switchTo({
+      transitionDuration: 2000,
+    });
 
     return scene;
   }
