@@ -11,9 +11,9 @@ import { Component, OnInit } from '@angular/core';
       <div class="view">
         <app-view></app-view>
       </div>
-      <div class="controls">
+      <!-- <div class="controls">
         <app-back-forward></app-back-forward>
-      </div>
+      </div> -->
       <div class="infos">
         <app-panorama-infos></app-panorama-infos>
       </div>

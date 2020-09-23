@@ -4,7 +4,6 @@ import {
   degreesToRadians,
   radiansToDegrees,
 } from 'src/app/shared/utils/angle-conversion';
-import { createLogo } from 'src/app/shared/utils/hotspot';
 import { Hotspot, Panorama } from '../../models/panorama.model';
 import { MarzipanoService } from '../../services/marzipano.service';
 import { PanoramaService } from '../../services/panorama.service';
@@ -42,7 +41,6 @@ export class ViewComponent implements OnInit, OnDestroy {
       if (panorama) {
         this.scene = this.loadScene(panorama);
         this.panoramaService.getOnePanorama(panorama.id);
-        this.addHotspotLogo();
         // track if the viewer view change
         this.elementRef.nativeElement
           .querySelector('#viewer')
@@ -57,12 +55,6 @@ export class ViewComponent implements OnInit, OnDestroy {
       pitch: degreesToRadians(-10),
       fov: degreesToRadians(120),
     });
-  }
-
-  private addHotspotLogo() {
-    this.scene
-      .hotspotContainer()
-      .createHotspot(createLogo(), { yaw: 45, pitch: 45 });
   }
 
   // get the scene yaw and send it to the map to update the rotation's camera icon
