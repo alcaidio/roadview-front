@@ -29,18 +29,20 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-error class="server-error">{{ serverMessage }}</mat-error>
+      <mat-error class="server-error" *ngIf="error$ | async">
+        L'email et le mot de passe ne correspondent pas.
+      </mat-error>
 
       <button
         mat-raised-button
         color="accent"
         type="submit"
-        [disabled]="form.invalid || loading"
+        [disabled]="(loading$ | async) || form.invalid"
       >
         Envoyer
       </button>
     </form>
 
-    <a (click)="onClick()">Mot de passe oublié ?</a>
+    <a (click)="onForgetPassword()">Mot de passe oublié ?</a>
   </mat-card>
 </app-page>

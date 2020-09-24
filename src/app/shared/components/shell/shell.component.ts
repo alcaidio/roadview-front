@@ -1,10 +1,10 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { SnackService } from '../../services/snack.service';
+import { Logout } from './../../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-shell',
@@ -19,16 +19,16 @@ export class ShellComponent {
       shareReplay()
     );
 
+  @Select((state) => state.user.user.email) email$: Observable<string>;
+
   constructor(
-    private breakpointObserver: BreakpointObserver,
     public afAuth: AngularFireAuth,
-    private router: Router,
-    private snack: SnackService
+    private breakpointObserver: BreakpointObserver,
+    private store: Store
   ) {}
 
   onSignOut(drawer?: any) {
-    this.afAuth.signOut().then(() => this.router.navigate(['/home']));
-    this.snack.disconnected();
+    this.store.dispatch(new Logout());
     if (drawer) {
       drawer.close();
     }

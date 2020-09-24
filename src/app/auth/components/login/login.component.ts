@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { SnackService } from 'src/app/shared/services/snack.service';
+import { Navigate } from '@ngxs/router-plugin';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { LoginWithEmailAndPassword } from '../../store/auth.actions';
+import { AuthState } from '../../store/auth.state';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +12,11 @@ import { SnackService } from 'src/app/shared/services/snack.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  @Select(AuthState.getLoading) loading$: Observable<boolean>;
+  @Select(AuthState.getError) error$: Observable<any>;
   form: FormGroup;
-  loading = false;
-  serverMessage: string;
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private fb: FormBuilder,
-    private router: Router,
-    private snack: SnackService
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -28,8 +25,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onClick() {
-    this.router.navigate(['/auth/reset']);
+  onForgetPassword() {
+    this.store.dispatch(new Navigate(['/auth/reset']));
   }
 
   get email() {
@@ -39,17 +36,9 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  async onSubmit() {
-    this.loading = true;
+  onSubmit(): void {
     const email = this.email.value;
     const password = this.password.value;
-    try {
-      await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.router.navigate(['/viewer']);
-      this.snack.connected();
-    } catch (err) {
-      this.serverMessage = err;
-    }
-    this.loading = false;
+    this.store.dispatch(new LoginWithEmailAndPassword(email, password));
   }
 }
