@@ -29,6 +29,16 @@
       <a *ngIf="isAuth$ | async" mat-list-item (click)="onSignOut(drawer)"
         >🏴‍☠️ Se déconnecter</a
       >
+
+      <a mat-list-item *ngIf="theme$ | async as theme"
+        >‍<mat-slide-toggle
+          mat-list-item
+          checked="theme !== 'dark'"
+          (change)="onToggleTheme()"
+        >
+          <span>{{ theme | titlecase }}</span>
+        </mat-slide-toggle></a
+      >
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -95,6 +105,15 @@
           <a mat-menu-item (click)="onSignOut()">
             <i>🏴‍☠️</i>
             <span>Se déconnecter</span>
+          </a>
+          <a mat-menu-item *ngIf="theme$ | async as theme">
+            <mat-slide-toggle
+              mat-list-item
+              checked="theme !== 'dark'"
+              (change)="onToggleTheme()"
+            >
+              <span>{{ theme | titlecase }}</span>
+            </mat-slide-toggle>
           </a>
           <mat-divider></mat-divider>
           <a mat-menu-item id="email">

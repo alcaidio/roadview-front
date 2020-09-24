@@ -16,6 +16,7 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppState } from './app.state';
 import { SharedModule } from './shared/shared.module';
 
 export interface RouterStateParams {
@@ -60,8 +61,9 @@ export class CustomRouterStateSerializer
       disabled: environment.production,
     }),
     NgxsStoragePluginModule.forRoot({
-      key: ['auth.user'],
+      key: ['auth.user', 'app.theme'],
     }),
+    NgxsModule.forFeature([AppState]),
     AppRoutingModule,
   ],
   providers: [

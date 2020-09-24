@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { ToggleTheme } from 'src/app/app.state';
 import { User } from 'src/app/auth/model/auth.model';
 import { Logout } from './../../../auth/store/auth.actions';
 
@@ -19,9 +20,9 @@ export class ShellComponent {
       shareReplay()
     );
 
-  // @Select(AuthState.isAuth) isAuth$: Observable<boolean>;
   @Select((state) => state.auth.user) user$: Observable<User>;
   @Select((state) => !!state.auth.user) isAuth$: Observable<string>;
+  @Select((state) => state.app.theme) theme$: Observable<string>;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -33,5 +34,9 @@ export class ShellComponent {
     if (drawer) {
       drawer.close();
     }
+  }
+
+  onToggleTheme(): void {
+    this.store.dispatch(new ToggleTheme());
   }
 }
