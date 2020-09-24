@@ -15,7 +15,7 @@
         routerLink="/viewer"
         routerLinkActive="mat-flat-button"
         (click)="drawer.close()"
-        *ngIf="afAuth.authState | async"
+        *ngIf="isAuth$ | async"
         >🎥 Viewer</a
       >
       <a
@@ -23,13 +23,10 @@
         routerLink="/auth/login"
         routerLinkActive="mat-flat-button"
         (click)="drawer.close()"
-        *ngIf="!(afAuth.authState | async)"
+        *ngIf="!(isAuth$ | async)"
         >🔑 Login</a
       >
-      <a
-        *ngIf="afAuth.authState | async"
-        mat-list-item
-        (click)="onSignOut(drawer)"
+      <a *ngIf="isAuth$ | async" mat-list-item (click)="onSignOut(drawer)"
         >🏴‍☠️ Se déconnecter</a
       >
     </mat-nav-list>
@@ -58,7 +55,7 @@
           mat-button
           routerLink="/viewer"
           routerLinkActive="mat-flat-button"
-          *ngIf="afAuth.authState | async"
+          *ngIf="isAuth$ | async"
           >🎥 Viewer</a
         >
       </div>
@@ -66,13 +63,13 @@
         mat-button
         routerLink="/auth/login"
         routerLinkActive="mat-flat-button"
-        *ngIf="!(afAuth.authState | async)"
+        *ngIf="!(isAuth$ | async)"
         >🔑 Login</a
       >
       <!-- <a
         mat-button
         routerLink="/auth/login"
-        *ngIf="afAuth.authState | async as user"
+        *ngIf="isAuth$ | async as user"
       >
         <img
           class="avatar"
@@ -94,7 +91,7 @@
           <i>🏢</i>
           <span>A propos d'Immergis</span>
         </a>
-        <ng-container *ngIf="afAuth.authState | async as user">
+        <ng-container *ngIf="isAuth$ | async">
           <a mat-menu-item (click)="onSignOut()">
             <i>🏴‍☠️</i>
             <span>Se déconnecter</span>
@@ -102,7 +99,7 @@
           <mat-divider></mat-divider>
           <a mat-menu-item id="email">
             <i>🙎‍♀️</i>
-            <span>{{ user.email }}</span>
+            <span>{{ (user$ | async)?.email }}</span>
           </a>
         </ng-container>
       </mat-menu>

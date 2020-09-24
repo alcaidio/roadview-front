@@ -1,9 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { User } from 'src/app/auth/model/auth.model';
 import { Logout } from './../../../auth/store/auth.actions';
 
 @Component({
@@ -19,10 +19,11 @@ export class ShellComponent {
       shareReplay()
     );
 
-  @Select((state) => state.user.user.email) email$: Observable<string>;
+  // @Select(AuthState.isAuth) isAuth$: Observable<boolean>;
+  @Select((state) => state.auth.user) user$: Observable<User>;
+  @Select((state) => !!state.auth.user) isAuth$: Observable<string>;
 
   constructor(
-    public afAuth: AngularFireAuth,
     private breakpointObserver: BreakpointObserver,
     private store: Store
   ) {}

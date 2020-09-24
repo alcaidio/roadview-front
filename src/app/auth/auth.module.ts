@@ -20,9 +20,9 @@ import { AuthState } from './store/auth.state';
   ],
   imports: [
     CommonModule,
+    NgxsModule.forFeature([AuthState]),
     SharedModule,
     AuthRoutingModule,
-    NgxsModule.forFeature([AuthState]),
   ],
   exports: [GoogleSigninDirective],
 })

@@ -31,8 +31,18 @@ export class AuthState {
   constructor(private afAuth: AngularFireAuth, private snack: SnackService) {}
 
   @Selector()
+  static isAuth(state: AuthStateModel) {
+    return !!state.user;
+  }
+
+  @Selector()
   static getUser(state: AuthStateModel) {
     return state.user;
+  }
+
+  @Selector()
+  static getEmail(state: AuthStateModel) {
+    return state.user.email;
   }
 
   @Selector()
@@ -72,7 +82,10 @@ export class AuthState {
     return this.afAuth
       .signInWithEmailAndPassword(action.email, action.password)
       .then((user: any) => {
-        ctx.dispatch(new LoginSuccess(user));
+        const { uid, email, displayName, phoneNumber, photoURL } = user.user;
+        ctx.dispatch(
+          new LoginSuccess({ uid, email, displayName, phoneNumber, photoURL })
+        );
       })
       .catch((error) => {
         ctx.dispatch(new LoginFailed(error));

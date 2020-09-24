@@ -25,6 +25,7 @@
     "@asymmetrik/ngx-leaflet": "^8.1.0",
     "@ngxs/devtools-plugin": "^3.7.0",
     "@ngxs/router-plugin": "^3.7.0",
+    "@ngxs/storage-plugin": "^3.7.0",
     "@ngxs/store": "^3.7.0",
     "@types/leaflet-rotatedmarker": "^0.2.1",
     "@types/leaflet.markercluster": "^1.4.2",
