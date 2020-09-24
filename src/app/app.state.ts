@@ -1,17 +1,17 @@
-// import { Injectable } from '@angular/core';
-// import { State } from '@ngxs/store';
+import { Injectable } from '@angular/core';
+import { State } from '@ngxs/store';
 
-// export type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
 
-// export interface AppStateModel {
-//   theme: Theme;
-// }
+export interface AppStateModel {
+  theme: Theme;
+}
 
-// @State<AppStateModel>({
-//   name: 'app',
-//   defaults: {
-//     theme: 'light',
-//   },
-// })
-// @Injectable()
-// export class AppState {}
+@State<AppStateModel>({
+  name: 'app',
+  defaults: {
+    theme: 'light',
+  },
+})
+@Injectable()
+export class AppState {}
