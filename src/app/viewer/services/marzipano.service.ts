@@ -12,6 +12,7 @@ import { createHotspot } from './../../shared/utils/hotspot';
 })
 export class MarzipanoService {
   viewer: any;
+  view: any;
   defaultViewerOptions = {
     controls: {
       mouseViewMode: 'drag', // drag|qtvr
@@ -32,11 +33,11 @@ export class MarzipanoService {
   loadScene(viewer: Marzipano.Viewer, image: string, viewConfig: any) {
     const geometry = new Marzipano.EquirectGeometry(this.defaultSceneLevels);
     const source = Marzipano.ImageUrlSource.fromString(image);
-    const view = new Marzipano.RectilinearView(viewConfig, this.limiter);
+    this.view = new Marzipano.RectilinearView(viewConfig, this.limiter);
     const scene = viewer.createScene({
       source,
       geometry,
-      view,
+      view: this.view,
     });
 
     // TODO : keep the config of the last view
@@ -45,10 +46,14 @@ export class MarzipanoService {
     // view.setFov(degreesToRadians(fov));
 
     scene.switchTo({
-      transitionDuration: 2000,
+      transitionDuration: 2500,
     });
 
     return scene;
+  }
+
+  loadParams() {
+    return this.view.parameters();
   }
 
   /*

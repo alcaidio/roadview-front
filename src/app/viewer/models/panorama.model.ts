@@ -1,7 +1,10 @@
 export interface Panorama {
   id: number;
   type: 'Feature';
-  geometry: GeoJSON.Geometry;
+  geometry: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
   properties: {
     image: string;
     direction: number;
@@ -19,4 +22,11 @@ export interface Hotspot {
   panoId: number;
   distance: number;
   direction: number;
+}
+
+export interface ViewParams {
+  fov: number;
+  pitch: number;
+  roll: number;
+  yaw: number;
 }

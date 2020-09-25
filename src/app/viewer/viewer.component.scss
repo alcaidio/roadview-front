@@ -1,6 +1,6 @@
 .container {
-  // -55 because of mat-toolbar
-  height: calc(100% - 55px);
+  // -65 because of mat-toolbar
+  height: calc(100% - 65px);
   position: relative;
 }
 
@@ -35,14 +35,4 @@
   top: 0;
   z-index: 9;
   padding: 12px;
-}
-
-.no {
-  padding: 15px;
-  margin-left: 100px;
-  margin-top: 40px;
-}
-
-.fleche {
-  margin-right: 5px;
 }

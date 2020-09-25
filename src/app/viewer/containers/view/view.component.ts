@@ -1,13 +1,12 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import {
-  degreesToRadians,
-  radiansToDegrees,
-} from 'src/app/shared/utils/angle-conversion';
+import { degreesToRadians } from 'src/app/shared/utils/angle-conversion';
 import { Hotspot, Panorama } from '../../models/panorama.model';
 import { MarzipanoService } from '../../services/marzipano.service';
-import { PanoramaService } from '../../services/panorama.service';
-import { ViewerService } from '../../services/viewer.service';
+import { PanoramasState, SelectPanorama, SetViewerParams } from '../../store';
+import { ID } from './../../../shared/models/id.model';
+import { debounce } from './../../../shared/utils/event-listener';
 
 @Component({
   selector: 'app-view',
@@ -15,7 +14,8 @@ import { ViewerService } from '../../services/viewer.service';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnInit, OnDestroy {
-  panorama$: Observable<Panorama>;
+  @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
+  @Select(PanoramasState.getSelectedId) id$: Observable<ID>;
   subs: Subscription;
   viewer: any;
   scene: any;
@@ -25,28 +25,33 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private marzipano: MarzipanoService,
-    private viewService: ViewerService,
-    private panoramaService: PanoramaService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private store: Store
   ) {}
 
   ngOnInit() {
-    // initialise the view
     this.viewer = this.marzipano.initialize(document.querySelector('#viewer'));
-
-    // subscribe to the panorama, when user click on a point on the map a panorama is submitted with loadFeature()
-    this.panorama$ = this.viewService.getPanorama();
+    this.id$.subscribe((id) => {
+      this.store.dispatch(new SelectPanorama(id));
+    });
 
     this.subs = this.panorama$.subscribe((panorama) => {
       if (panorama) {
         this.scene = this.loadScene(panorama);
-        this.panoramaService.getOnePanorama(panorama.id);
         // track if the viewer view change
         this.elementRef.nativeElement
           .querySelector('#viewer')
-          .addEventListener('mousemove', this.onMouseMove.bind(this));
+          .addEventListener(
+            'mousemove',
+            debounce(this.onMouseMove.bind(this), 120)
+          );
       }
     });
+  }
+
+  // get the scene yaw and send it to the map to update the rotation's camera icon
+  onMouseMove() {
+    this.store.dispatch(new SetViewerParams());
   }
 
   private loadScene(panorama: Panorama) {
@@ -55,13 +60,6 @@ export class ViewComponent implements OnInit, OnDestroy {
       pitch: degreesToRadians(-10),
       fov: degreesToRadians(120),
     });
-  }
-
-  // get the scene yaw and send it to the map to update the rotation's camera icon
-  onMouseMove() {
-    const params = this.scene._view._params;
-    const yaw = radiansToDegrees(params.yaw);
-    this.viewService.loadRotation(yaw);
   }
 
   ngOnDestroy(): void {

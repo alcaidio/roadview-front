@@ -11,12 +11,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { ShellComponent } from './components/shell/shell.component';
+import {
+  ArrowDownDirective,
+  ArrowUpDirective,
+} from './directives/key-handler.directive';
 
 const COMPONENT = [ShellComponent];
 
@@ -39,10 +45,14 @@ const MODULES = [
   MatSnackBarModule,
   MatExpansionModule,
   MatSlideToggleModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
 ];
 
+const DIRECTIVES = [ArrowUpDirective, ArrowDownDirective];
+
 @NgModule({
-  declarations: [...COMPONENT],
+  declarations: [...COMPONENT, ...DIRECTIVES],
   imports: [...MODULES],
   exports: [...COMPONENT, ...MODULES],
 })

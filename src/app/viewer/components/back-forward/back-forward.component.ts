@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { PanoramaService } from '../../services/panorama.service';
-import { ViewerService } from '../../services/viewer.service';
+import { GoBack, GoForward, PanoramasState } from '../../store';
 import { Panorama } from './../../models/panorama.model';
 
 @Component({
@@ -9,15 +9,27 @@ import { Panorama } from './../../models/panorama.model';
   templateUrl: './back-forward.component.html',
   styleUrls: ['./back-forward.component.scss'],
 })
-export class BackForwardComponent implements OnInit {
-  panorama$: Observable<Panorama>;
-  constructor(
-    private viewerService: ViewerService,
-    private panoramaService: PanoramaService
-  ) {}
+export class BackForwardComponent {
+  @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
+  constructor(private store: Store) {}
 
-  ngOnInit(): void {
-    this.panorama$ = this.viewerService.getPanorama();
+  @HostListener('document:keydown.arrowup')
+  onForward() {
+    this.store.dispatch(new GoForward(1));
   }
 
+  @HostListener('document:keydown.arrowdown')
+  onBack() {
+    this.store.dispatch(new GoBack(1));
+  }
+
+  @HostListener('document:keydown.shift.arrowup')
+  onForwardSpeed() {
+    this.store.dispatch(new GoForward(10));
+  }
+
+  @HostListener('document:keydown.shift.arrowdown')
+  onBackSpeed() {
+    this.store.dispatch(new GoBack(10));
+  }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import {
   divIcon,
   geoJSON,
@@ -14,8 +15,15 @@ import 'leaflet.markercluster';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PanoramaList } from '../../models/panorama.model';
-import { PanoramaService } from '../../services/panorama.service';
-import { ViewerService } from '../../services/viewer.service';
+import {
+  DisplayCamera,
+  MapState,
+  PanoramasState,
+  SelectPanorama,
+  ViewState,
+} from '../../store';
+import { radiansToDegrees } from './../../../shared/utils/angle-conversion';
+import { Panorama, ViewParams } from './../../models/panorama.model';
 
 @Component({
   selector: 'app-map',
@@ -23,9 +31,13 @@ import { ViewerService } from '../../services/viewer.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  @Select(MapState.getPanoramaLayer) panoramas$: Observable<PanoramaList>;
+  @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
+  @Select(ViewState.getParams) params$: Observable<ViewParams>;
+  @Select(PanoramasState.getLoading) loading$: Observable<boolean>;
+
   map: Map;
   token = environment.mapbox.token;
-  panoramas$: Observable<PanoramaList>;
   options: any;
   start = false;
 
@@ -40,13 +52,10 @@ export class MapComponent implements OnInit {
     }
   );
 
-  constructor(
-    private panoramaService: PanoramaService,
-    private viewService: ViewerService
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.panoramas$ = this.panoramaService.getAllPanoramas();
+    // this.panoramas$ = this.panoramaService.getAllPanoramas();
     // add base layer to the map (option in html)
     this.options = {
       layers: [this.base],
@@ -60,6 +69,15 @@ export class MapComponent implements OnInit {
     let camera: any;
     let cameraOptions: any;
 
+    cameraOptions = {
+      icon: icon({
+        iconUrl: 'assets/img/red2.png',
+        iconSize: [35, 35],
+      }),
+      rotationOrigin: 'center center',
+      opacity: 0.7,
+    };
+
     const createPoint = (feature, latlng) => {
       return marker(latlng, {
         icon: icon({
@@ -70,35 +88,33 @@ export class MapComponent implements OnInit {
     };
 
     // create the camera icon for the map view
-    const displayCamera = (event) => {
-      const direction = +event.sourceTarget.feature.properties.direction;
-      cameraOptions = {
-        icon: icon({
-          iconUrl: 'assets/img/red2.png',
-          iconSize: [35, 35],
-        }),
-        rotationOrigin: 'center center',
-        opacity: 0.7,
-      };
-
+    this.panorama$.subscribe((panorama: Panorama) => {
+      const position = panorama.geometry.coordinates;
+      const rotation = panorama.properties.direction;
+      this.store.dispatch(
+        new DisplayCamera({
+          position,
+          rotation,
+        })
+      );
       if (camera !== undefined) {
         map.removeLayer(camera);
       }
 
-      camera = marker(event.latlng, cameraOptions);
-      camera.setRotationAngle(direction);
-
-      // get the rotation of the viewer to update the camera icon on the map
-      this.viewService.getRotation().subscribe((rotation) => {
-        const rot = direction + rotation;
+      camera = marker([position[1], position[0]], cameraOptions);
+      camera.setRotationAngle(panorama.properties.direction);
+      this.params$.subscribe((params: ViewParams) => {
+        const rot =
+          panorama.properties.direction + radiansToDegrees(params.yaw);
         camera.setRotationAngle(rot);
       });
-
       camera.addTo(map);
-    };
+    });
 
     // zoom to the feature and add camera icon on the map, load the new panorama in the viewer
     const zoomToFeature = (e: any, layer) => {
+      this.store.dispatch(new SelectPanorama(e.sourceTarget.feature.id));
+
       if (map.getZoom() < 20) {
         map.flyTo(e.latlng, 20);
       } else {
@@ -108,9 +124,6 @@ export class MapComponent implements OnInit {
       if (!this.start) {
         this.start = true;
       }
-
-      this.viewService.loadPanorama(e.sourceTarget.feature);
-      displayCamera(e);
     };
 
     // add an event listener

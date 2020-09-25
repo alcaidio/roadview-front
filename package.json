@@ -35,7 +35,7 @@
     "leaflet.markercluster": "^1.4.1",
     "marzipano": "^0.9.1",
     "photo-sphere-viewer": "^4.0.6",
-    "rxjs": "~6.5.4",
+    "rxjs": "^6.5.5",
     "three": "^0.120.0",
     "tslib": "^1.10.0",
     "uevent": "^2.0.0",

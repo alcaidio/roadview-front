@@ -1,6 +1,11 @@
-<div
-  id="map"
-  leaflet
-  (leafletMapReady)="onMapReady($event)"
-  [leafletOptions]="options"
-></div>
+<ng-container *ngIf="loading$ | async; else map">
+  <div class="skeleton"></div
+></ng-container>
+<ng-template #map>
+  <div
+    id="map"
+    leaflet
+    (leafletMapReady)="onMapReady($event)"
+    [leafletOptions]="options"
+  ></div>
+</ng-template>
