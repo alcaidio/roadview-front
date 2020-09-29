@@ -1,0 +1,31 @@
+stages:
+  - buildDev
+  - packageDev
+
+build:
+  stage: buildDev
+  image: node:latest
+  script:
+    - npm install -g @angular/cli@9.1.6
+    - npm install
+    - ng build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 hours
+  cache:
+    paths:
+      - node_modules/
+
+package:
+  stage: packageDev
+  image: docker:stable
+  services:
+    - docker:dind
+  only:
+    - develop
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.immergis.fr:4567
+  script:
+    - docker build -t gitlab.immergis.fr:4567/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/dev:latest .
+    - docker push gitlab.immergis.fr:4567/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/dev:latest
