@@ -55,7 +55,9 @@ export class CustomRouterStateSerializer
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    NgxsModule.forRoot(),
+    NgxsModule.forRoot([AppState], {
+      developmentMode: !environment.production,
+    }),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production,
