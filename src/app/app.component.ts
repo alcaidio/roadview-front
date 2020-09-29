@@ -1,9 +1,11 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { Observable } from 'rxjs';
 import { AppState } from './app.state';
 
+AutoUnsubscribe();
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,12 +13,11 @@ import { AppState } from './app.state';
 })
 export class AppComponent implements OnInit, OnDestroy {
   @Select(AppState.isDarkTheme) isDarkTheme$: Observable<boolean>;
-  sub = new Subscription();
 
   constructor(private overlayContainer: OverlayContainer) {}
 
   ngOnInit(): void {
-    this.sub = this.isDarkTheme$.subscribe((isDark) => {
+    this.isDarkTheme$.subscribe((isDark) => {
       if (isDark) {
         this.overlayContainer.getContainerElement().classList.add('dark-theme');
       }
@@ -24,6 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // need to be here with Autounsubscribe
   }
 }

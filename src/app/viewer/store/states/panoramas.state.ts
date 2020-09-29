@@ -54,6 +54,11 @@ export class PanoramasState implements NgxsOnInit {
   }
 
   @Selector()
+  static getPanoramasCount(state: PanoramasStateModel) {
+    return state.ids.length;
+  }
+
+  @Selector()
   static getSelectedId(state: PanoramasStateModel) {
     return state.selectedPanoramaId;
   }

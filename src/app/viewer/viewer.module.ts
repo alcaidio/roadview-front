@@ -10,6 +10,7 @@ import { MapComponent } from './containers/map/map.component';
 import { ViewComponent } from './containers/view/view.component';
 import { ViewerStates } from './store';
 import { ViewerComponent } from './viewer.component';
+import { TimeSlideComponent } from './components/time-slide/time-slide.component';
 
 export const VIEWER_ROUTES: Routes = [{ path: '', component: ViewerComponent }];
 
@@ -20,6 +21,7 @@ export const VIEWER_ROUTES: Routes = [{ path: '', component: ViewerComponent }];
     MapComponent,
     BackForwardComponent,
     PanoramaInfosComponent,
+    TimeSlideComponent,
   ],
   imports: [
     CommonModule,

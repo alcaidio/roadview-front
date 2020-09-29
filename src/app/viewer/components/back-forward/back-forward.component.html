@@ -1,26 +1,24 @@
-<ng-container *ngIf="panorama$ | async">
-  <div class="flex-container">
-    <div class="button-container">
-      <button
-        appArrowup
-        class="button"
-        mat-raised-button
-        aria-label="Aller à la photo suivante"
-        (click)="onForward()"
-      >
-        <mat-icon>keyboard_arrow_up</mat-icon>
-      </button>
-    </div>
-    <div class="button-container">
-      <button
-        appArrowdown
-        class="button"
-        mat-raised-button
-        aria-label="Aller à la photo précèdente"
-        (click)="onBack()"
-      >
-        <mat-icon>keyboard_arrow_down</mat-icon>
-      </button>
-    </div>
+<div class="flex-container">
+  <div class="button-container">
+    <button
+      appArrowup
+      class="button"
+      mat-raised-button
+      aria-label="Aller à la photo suivante"
+      (click)="onForward()"
+    >
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
   </div>
-</ng-container>
+  <div class="button-container">
+    <button
+      appArrowdown
+      class="button"
+      mat-raised-button
+      aria-label="Aller à la photo précèdente"
+      (click)="onBack()"
+    >
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+</div>

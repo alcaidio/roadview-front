@@ -1,8 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { GoBack, GoForward, PanoramasState } from '../../store';
-import { Panorama } from './../../models/panorama.model';
+import { Store } from '@ngxs/store';
+import { GoBack, GoForward } from '../../store';
 
 @Component({
   selector: 'app-back-forward',
@@ -10,7 +8,6 @@ import { Panorama } from './../../models/panorama.model';
   styleUrls: ['./back-forward.component.scss'],
 })
 export class BackForwardComponent {
-  @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
   constructor(private store: Store) {}
 
   @HostListener('document:keydown.arrowup')

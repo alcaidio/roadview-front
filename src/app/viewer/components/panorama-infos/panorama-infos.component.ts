@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { Panorama } from '../../models/panorama.model';
-import { PanoramasState } from '../../store';
 
 @Component({
   selector: 'app-panorama-infos',
@@ -10,5 +7,5 @@ import { PanoramasState } from '../../store';
   styleUrls: ['./panorama-infos.component.scss'],
 })
 export class PanoramaInfosComponent {
-  @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
+  @Input() panorama: Panorama;
 }
