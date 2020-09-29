@@ -17,7 +17,10 @@ import { PanoramasState } from './store';
   template: `
     <div class="container">
       <div *ngIf="loading$ | async">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar
+          mode="indeterminate"
+          color="accent"
+        ></mat-progress-bar>
       </div>
       <div class="map">
         <app-map></app-map>
@@ -27,6 +30,7 @@ import { PanoramasState } from './store';
       </div>
       <ng-container *ngIf="panorama$ | async as panorama">
         <div class="controls">
+          <app-animation-button></app-animation-button>
           <app-back-forward></app-back-forward>
         </div>
         <div class="slide" *ngIf="isBig">

@@ -11,6 +11,7 @@ import { ViewComponent } from './containers/view/view.component';
 import { ViewerStates } from './store';
 import { ViewerComponent } from './viewer.component';
 import { TimeSlideComponent } from './components/time-slide/time-slide.component';
+import { AnimationButtonComponent } from './components/animation-button/animation-button.component';
 
 export const VIEWER_ROUTES: Routes = [{ path: '', component: ViewerComponent }];
 
@@ -22,6 +23,7 @@ export const VIEWER_ROUTES: Routes = [{ path: '', component: ViewerComponent }];
     BackForwardComponent,
     PanoramaInfosComponent,
     TimeSlideComponent,
+    AnimationButtonComponent,
   ],
   imports: [
     CommonModule,
