@@ -110,12 +110,16 @@ export class MapComponent implements OnInit, OnDestroy {
           panorama.properties.direction + radiansToDegrees(params.yaw);
         camera.setRotationAngle(rot);
       });
+
       camera.addTo(map);
+      map.panTo({ lat: position[1], lng: position[0] });
     });
 
     // zoom to the feature and add camera icon on the map, load the new panorama in the viewer
     const zoomToFeature = (e: any, layer) => {
       this.store.dispatch(new SelectPanorama(e.sourceTarget.feature.id));
+
+      console.log(e.latlng);
 
       if (map.getZoom() < 20) {
         map.flyTo(e.latlng, 20);

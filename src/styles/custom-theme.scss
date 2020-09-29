@@ -56,7 +56,7 @@ $custom-orange: (
 
 // Light Theme
 $primary: mat-palette($custom-orange);
-$accent: mat-palette($mat-pink, A200, A100, A400);
+$accent: mat-palette($mat-green, A200, A100, A400);
 $warn: mat-palette($mat-red);
 $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);

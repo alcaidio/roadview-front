@@ -1,3 +1,4 @@
+import { Panorama } from './../../models/panorama.model';
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { SelectPanorama } from '../../store';
@@ -9,6 +10,7 @@ import { SelectPanorama } from '../../store';
 })
 export class TimeSlideComponent {
   @Input() count: number;
+  @Input() panorama: Panorama;
 
   constructor(private store: Store) {}
 

@@ -30,7 +30,10 @@ import { PanoramasState } from './store';
           <app-back-forward></app-back-forward>
         </div>
         <div class="slide" *ngIf="isBig">
-          <app-time-slide [count]="count$ | async"></app-time-slide>
+          <app-time-slide
+            [count]="count$ | async"
+            [panorama]="panorama"
+          ></app-time-slide>
         </div>
         <div class="infos">
           <app-panorama-infos [panorama]="panorama"></app-panorama-infos>

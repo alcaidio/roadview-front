@@ -1,8 +1,9 @@
 <mat-slider
-  thumbLabel
   min="1"
   [max]="count"
+  (change)="onSelectPanorama($event.value)"
+  [value]="panorama.id"
   vertical="true"
   invert="true"
-  (change)="onSelectPanorama($event.value)"
+  thumbLabel="true"
 ></mat-slider>
