@@ -1,7 +1,7 @@
-import { Panorama } from './../../models/panorama.model';
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { SelectPanorama } from '../../store';
+import { Panorama } from './../../models/panorama.model';
 
 @Component({
   selector: 'app-time-slide',
@@ -11,10 +11,11 @@ import { SelectPanorama } from '../../store';
 export class TimeSlideComponent {
   @Input() count: number;
   @Input() panorama: Panorama;
+  @Input() disabled = false;
 
   constructor(private store: Store) {}
 
-  onSelectPanorama(nbr: number) {
-    this.store.dispatch(new SelectPanorama(nbr));
+  onSelectPanorama(id: number) {
+    this.store.dispatch(new SelectPanorama(id));
   }
 }

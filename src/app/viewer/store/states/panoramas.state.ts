@@ -12,6 +12,7 @@ import {
   LoadPanoramasFailed,
   LoadPanoramasSuccess,
   SelectPanorama,
+  ToggleAnimation,
 } from './../actions/panoramas.action';
 
 export const arrayToObject = (entities) => {
@@ -26,6 +27,7 @@ export interface PanoramasStateModel {
     [id: string]: Panorama;
   };
   selectedPanoramaId: ID | null;
+  animation: boolean;
   loading: boolean;
   loaded: boolean;
   error: string;
@@ -35,6 +37,7 @@ export const panoramasStateDefaults: PanoramasStateModel = {
   ids: [],
   entities: {},
   selectedPanoramaId: 1,
+  animation: false,
   loading: false,
   loaded: false,
   error: '',
@@ -71,6 +74,11 @@ export class PanoramasState implements NgxsOnInit {
   @Selector()
   static getLoading(state: PanoramasStateModel) {
     return state.loading;
+  }
+
+  @Selector()
+  static getIsAnimate(state: PanoramasStateModel) {
+    return state.animation;
   }
 
   ngxsOnInit(ctx: StateContext<PanoramasStateModel>) {
@@ -153,5 +161,12 @@ export class PanoramasState implements NgxsOnInit {
       id = count + 1;
     }
     patchState({ selectedPanoramaId: id - ((1 * action.speed) % count) });
+  }
+
+  @Action(ToggleAnimation)
+  toggleAnimation({ patchState, getState }: StateContext<PanoramasStateModel>) {
+    patchState({
+      animation: !getState().animation,
+    });
   }
 }

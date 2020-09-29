@@ -20,6 +20,10 @@ export class SelectPanorama {
   constructor(public id: ID) {}
 }
 
+export class ToggleAnimation {
+  static readonly type = '[Panoramas] Toggle Animation';
+}
+
 export class GoForward {
   static readonly type = '[Panoramas] Go Forward';
   constructor(public speed: number) {}

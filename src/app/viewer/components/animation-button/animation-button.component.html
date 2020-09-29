@@ -2,8 +2,18 @@
   mat-mini-fab
   color="accent"
   aria-label="Start and stop animation"
-  (click)="onClick()"
+  (click)="onStop()"
+  *ngIf="play"
 >
-  <mat-icon *ngIf="!play">play_arrow</mat-icon>
-  <mat-icon *ngIf="play">stop</mat-icon>
+  <mat-icon>stop</mat-icon>
+</button>
+
+<button
+  mat-mini-fab
+  color="accent"
+  aria-label="Start and stop animation"
+  (click)="onPlay()"
+  *ngIf="!play"
+>
+  <mat-icon>play_arrow</mat-icon>
 </button>

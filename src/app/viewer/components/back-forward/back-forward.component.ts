@@ -1,32 +1,28 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Observable } from 'rxjs';
-import { GoBack, GoForward, ViewState } from '../../store';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { GoBack, GoForward } from '../../store';
 import { radiansToDegrees } from './../../../shared/utils/angle-conversion';
 import { ViewParams } from './../../models/panorama.model';
 
-AutoUnsubscribe();
 @Component({
   selector: 'app-back-forward',
   templateUrl: './back-forward.component.html',
   styleUrls: ['./back-forward.component.scss'],
 })
-export class BackForwardComponent implements OnInit, OnDestroy {
-  @Select(ViewState.getParams) params$: Observable<ViewParams>;
+export class BackForwardComponent implements OnInit {
+  @Input() params: ViewParams;
+  @Input() disabled = false;
   lookBack = false;
 
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.params$.subscribe((params) => {
-      const angle = radiansToDegrees(params.yaw);
-      if (angle < 90 && angle > -90) {
-        this.lookBack = false;
-      } else {
-        this.lookBack = true;
-      }
-    });
+    const angle = radiansToDegrees(this.params.yaw);
+    if (angle < 90 && angle > -90) {
+      this.lookBack = false;
+    } else {
+      this.lookBack = true;
+    }
   }
 
   @HostListener('document:keydown.arrowup')
@@ -63,9 +59,5 @@ export class BackForwardComponent implements OnInit, OnDestroy {
     } else {
       this.store.dispatch(new GoBack(10));
     }
-  }
-
-  ngOnDestroy(): void {
-    // because of AutoUnsubscribe
   }
 }

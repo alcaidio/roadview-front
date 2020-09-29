@@ -30,3 +30,7 @@
 mat-icon {
   margin-bottom: 3px;
 }
+
+button:disabled {
+  cursor: not-allowed;
+}

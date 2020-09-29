@@ -7,8 +7,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Observable } from 'rxjs';
-import { Panorama } from './models/panorama.model';
-import { PanoramasState } from './store';
+import { Panorama, ViewParams } from './models/panorama.model';
+import { PanoramasState, ViewState } from './store';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,13 +30,19 @@ import { PanoramasState } from './store';
       </div>
       <ng-container *ngIf="panorama$ | async as panorama">
         <div class="controls">
-          <app-animation-button></app-animation-button>
-          <app-back-forward></app-back-forward>
+          <app-animation-button
+            [play]="isAnimate$ | async"
+          ></app-animation-button>
+          <app-back-forward
+            [params]="params$ | async"
+            [disabled]="isAnimate$ | async"
+          ></app-back-forward>
         </div>
         <div class="slide" *ngIf="isBig">
           <app-time-slide
             [count]="count$ | async"
             [panorama]="panorama"
+            [disabled]="isAnimate$ | async"
           ></app-time-slide>
         </div>
         <div class="infos">
@@ -50,6 +56,9 @@ export class ViewerComponent implements OnInit, OnDestroy {
   @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
   @Select(PanoramasState.getLoading) loading$: Observable<boolean>;
   @Select(PanoramasState.getPanoramasCount) count$: Observable<number>;
+  @Select(PanoramasState.getIsAnimate) isAnimate$: Observable<boolean>;
+  @Select(ViewState.getParams) params$: Observable<ViewParams>;
+
   isBig: boolean;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
