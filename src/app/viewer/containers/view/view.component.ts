@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Observable, Subscription } from 'rxjs';
 import { degreesToRadians } from 'src/app/shared/utils/angle-conversion';
 import { Hotspot, Panorama } from '../../models/panorama.model';
@@ -8,6 +9,7 @@ import { PanoramasState, SelectPanorama, SetViewerParams } from '../../store';
 import { ID } from './../../../shared/models/id.model';
 import { debounce } from './../../../shared/utils/event-listener';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -35,7 +37,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       this.store.dispatch(new SelectPanorama(id));
     });
 
-    this.subs = this.panorama$.subscribe((panorama) => {
+    this.panorama$.subscribe((panorama) => {
       if (panorama) {
         this.scene = this.loadScene(panorama);
         // track if the viewer view change
@@ -43,7 +45,7 @@ export class ViewComponent implements OnInit, OnDestroy {
           .querySelector('#viewer')
           .addEventListener(
             'mousemove',
-            debounce(this.onMouseMove.bind(this), 120)
+            debounce(this.onMouseMove.bind(this), 100)
           );
       }
     });
@@ -62,7 +64,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  // This method must be present, even if empty.
   ngOnDestroy(): void {
-    this.subs.unsubscribe();
+    // We'll throw an error if it doesn't
   }
 }

@@ -34,6 +34,7 @@
     "leaflet-rotatedmarker": "^0.2.0",
     "leaflet.markercluster": "^1.4.1",
     "marzipano": "^0.9.1",
+    "ngx-auto-unsubscribe": "^3.0.1",
     "photo-sphere-viewer": "^4.0.6",
     "rxjs": "^6.5.5",
     "three": "^0.120.0",

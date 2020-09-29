@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import {
   divIcon,
@@ -12,6 +12,7 @@ import {
 } from 'leaflet';
 import 'leaflet-rotatedmarker';
 import 'leaflet.markercluster';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PanoramaList } from '../../models/panorama.model';
@@ -25,12 +26,13 @@ import {
 import { radiansToDegrees } from './../../../shared/utils/angle-conversion';
 import { Panorama, ViewParams } from './../../models/panorama.model';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   @Select(MapState.getPanoramaLayer) panoramas$: Observable<PanoramaList>;
   @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
   @Select(ViewState.getParams) params$: Observable<ViewParams>;
@@ -154,14 +156,10 @@ export class MapComponent implements OnInit {
       clusters.addLayer(geojson);
       map.addLayer(clusters);
     });
+  }
 
-    // track the zoom and display points layer or not
-    // map.on('zoomend', () => {
-    //   if (map.getZoom() > 14) {
-    //     map.addLayer(points);
-    //   } else {
-    //     map.removeLayer(points);
-    //   }
-    // });
+  // This method must be present, even if empty because of AutoUnsubscribe
+  ngOnDestroy(): void {
+    // We'll throw an error if it doesn't
   }
 }
