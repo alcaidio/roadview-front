@@ -119,8 +119,6 @@ export class MapComponent implements OnInit, OnDestroy {
     const zoomToFeature = (e: any, layer) => {
       this.store.dispatch(new SelectPanorama(e.sourceTarget.feature.id));
 
-      console.log(e.latlng);
-
       if (map.getZoom() < 20) {
         map.flyTo(e.latlng, 20);
       } else {

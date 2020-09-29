@@ -27,6 +27,6 @@ export interface Hotspot {
 export interface ViewParams {
   fov: number;
   pitch: number;
-  roll: number;
+  roll?: number;
   yaw: number;
 }

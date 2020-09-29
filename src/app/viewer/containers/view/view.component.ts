@@ -2,12 +2,17 @@ import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Observable, Subscription } from 'rxjs';
-import { degreesToRadians } from 'src/app/shared/utils/angle-conversion';
 import { Hotspot, Panorama } from '../../models/panorama.model';
 import { MarzipanoService } from '../../services/marzipano.service';
-import { PanoramasState, SelectPanorama, SetViewerParams } from '../../store';
+import {
+  PanoramasState,
+  SelectPanorama,
+  SetViewerParams,
+  ViewState,
+} from '../../store';
 import { ID } from './../../../shared/models/id.model';
 import { debounce } from './../../../shared/utils/event-listener';
+import { ViewParams } from './../../models/panorama.model';
 
 @AutoUnsubscribe()
 @Component({
@@ -17,6 +22,7 @@ import { debounce } from './../../../shared/utils/event-listener';
 })
 export class ViewComponent implements OnInit, OnDestroy {
   @Select(PanoramasState.getSelectedPanorama) panorama$: Observable<Panorama>;
+  @Select(ViewState.getParams) params$: Observable<ViewParams>;
   @Select(PanoramasState.getSelectedId) id$: Observable<ID>;
   subs: Subscription;
   viewer: any;
@@ -57,11 +63,19 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   private loadScene(panorama: Panorama) {
-    return this.marzipano.loadScene(this.viewer, panorama.properties.image, {
-      yaw: degreesToRadians(0),
-      pitch: degreesToRadians(-10),
-      fov: degreesToRadians(120),
+    let viewConfig: ViewParams;
+    this.params$.subscribe((params) => {
+      viewConfig = {
+        yaw: params.yaw,
+        pitch: params.pitch,
+        fov: 120,
+      };
     });
+    return this.marzipano.loadScene(
+      this.viewer,
+      panorama.properties.image,
+      viewConfig
+    );
   }
 
   // This method must be present, even if empty.

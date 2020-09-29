@@ -6,6 +6,7 @@ import {
   radiansToDegrees,
 } from './../../shared/utils/angle-conversion';
 import { createHotspot } from './../../shared/utils/hotspot';
+import { ViewParams } from './../models/panorama.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class MarzipanoService {
     return new Marzipano.Viewer(domElement, options);
   }
 
-  loadScene(viewer: Marzipano.Viewer, image: string, viewConfig: any) {
+  loadScene(viewer: Marzipano.Viewer, image: string, viewConfig: ViewParams) {
     const geometry = new Marzipano.EquirectGeometry(this.defaultSceneLevels);
     const source = Marzipano.ImageUrlSource.fromString(image);
     this.view = new Marzipano.RectilinearView(viewConfig, this.limiter);
@@ -40,10 +41,10 @@ export class MarzipanoService {
       view: this.view,
     });
 
-    // TODO : keep the config of the last view
-    // view.setYaw(degreesToRadians(yaw));
-    // view.setPitch(degreesToRadians(pitch));
-    // view.setFov(degreesToRadians(fov));
+    // keep the config of the last view
+    this.view.setYaw(viewConfig.yaw);
+    this.view.setPitch(viewConfig.pitch);
+    this.view.setFov(viewConfig.fov);
 
     scene.switchTo({
       transitionDuration: 2500,
