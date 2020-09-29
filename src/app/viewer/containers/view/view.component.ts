@@ -53,6 +53,9 @@ export class ViewComponent implements OnInit, OnDestroy {
             'mousemove',
             debounce(this.onMouseMove.bind(this), 100)
           );
+        this.elementRef.nativeElement
+          .querySelector('#viewer')
+          .addEventListener('touchend', this.onMouseMove.bind(this));
       }
     });
   }
