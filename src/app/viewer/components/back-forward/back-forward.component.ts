@@ -10,18 +10,20 @@ import { ViewParams } from './../../models/panorama.model';
   styleUrls: ['./back-forward.component.scss'],
 })
 export class BackForwardComponent implements OnInit {
-  @Input() params: ViewParams;
+  @Input() params: ViewParams | null;
   @Input() disabled = false;
   lookBack = false;
 
   constructor(private store: Store) {}
 
   ngOnInit() {
-    const angle = radiansToDegrees(this.params.yaw);
-    if (angle < 90 && angle > -90) {
-      this.lookBack = false;
-    } else {
-      this.lookBack = true;
+    if (this.params) {
+      const angle = radiansToDegrees(this.params.yaw);
+      if (angle < 90 && angle > -90) {
+        this.lookBack = false;
+      } else {
+        this.lookBack = true;
+      }
     }
   }
 

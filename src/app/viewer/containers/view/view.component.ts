@@ -68,7 +68,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       viewConfig = {
         yaw: params.yaw,
         pitch: params.pitch,
-        fov: 120,
+        fov: params.fov === 0 ? 120 : params.fov,
       };
     });
     return this.marzipano.loadScene(
