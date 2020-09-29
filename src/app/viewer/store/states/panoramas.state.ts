@@ -137,13 +137,9 @@ export class PanoramasState implements NgxsOnInit {
     { patchState, getState }: StateContext<PanoramasStateModel>,
     action: GoForward
   ) {
-    let id = +getState().selectedPanoramaId;
+    const id = +getState().selectedPanoramaId;
     const count = getState().ids.length;
-    const speed = action.speed;
-    if (id === count) {
-      id = 0;
-    }
-    patchState({ selectedPanoramaId: +id + 1 * speed });
+    patchState({ selectedPanoramaId: (id + 1 * action.speed) % count });
   }
 
   @Action(GoBack)
@@ -153,10 +149,9 @@ export class PanoramasState implements NgxsOnInit {
   ) {
     let id = +getState().selectedPanoramaId;
     const count = getState().ids.length;
-    const speed = action.speed;
     if (id === 1) {
       id = count + 1;
     }
-    patchState({ selectedPanoramaId: id - 1 * speed });
+    patchState({ selectedPanoramaId: id - ((1 * action.speed) % count) });
   }
 }
