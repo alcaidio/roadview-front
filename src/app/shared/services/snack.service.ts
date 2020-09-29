@@ -7,6 +7,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnackService {
   constructor(private snackBar: MatSnackBar) {}
 
+  notification(message: string, action = 'OK', duration = 5000) {
+    this.snackBar.open(message, action, { duration });
+  }
+
   authError() {
     this.snackBar.open('Vous devez être authentifié 👮🏻‍♂️', 'OK', {
       duration: 5000,

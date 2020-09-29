@@ -85,6 +85,7 @@ export class MapComponent implements OnInit, OnDestroy {
         icon: icon({
           iconUrl: 'assets/img/red.png',
           iconSize: [10, 10],
+          className: 'camera'
         }),
       });
     };

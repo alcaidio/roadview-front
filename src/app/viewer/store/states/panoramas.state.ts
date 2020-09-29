@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, map } from 'rxjs/operators';
 import { ID } from 'src/app/shared/models/id.model';
+import { SnackService } from 'src/app/shared/services/snack.service';
 import { LoadPanoramaLayer } from '../actions/map.action';
 import { Panorama, PanoramaList } from './../../models/panorama.model';
 import { PanoramaService } from './../../services/panorama.service';
@@ -49,7 +50,10 @@ export const panoramasStateDefaults: PanoramasStateModel = {
 })
 @Injectable()
 export class PanoramasState implements NgxsOnInit {
-  constructor(private panoramaService: PanoramaService) {}
+  constructor(
+    private panoramaService: PanoramaService,
+    private snack: SnackService
+  ) {}
 
   @Selector()
   static getEntities(state: PanoramasStateModel) {
@@ -165,8 +169,18 @@ export class PanoramasState implements NgxsOnInit {
 
   @Action(ToggleAnimation)
   toggleAnimation({ patchState, getState }: StateContext<PanoramasStateModel>) {
+    const animation = getState().animation;
     patchState({
-      animation: !getState().animation,
+      animation: !animation,
     });
+    if (!animation) {
+      this.snack.notification('Navigation automatique lancée ! 🚀', 'X', 4000);
+    } else {
+      this.snack.notification(
+        'Navigation automatique interrompu. 👀',
+        'X',
+        4000
+      );
+    }
   }
 }
