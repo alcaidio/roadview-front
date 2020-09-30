@@ -8,7 +8,7 @@ build:
   script:
     - npm install -g @angular/cli@9.1.6
     - npm install
-    - ng build
+    - ng build --prod
   artifacts:
     paths:
       - dist/
@@ -18,12 +18,12 @@ build:
       - node_modules/
 
 package:
+  only:
+    - develop
   stage: packageDev
   image: docker:stable
   services:
     - docker:dind
-  only:
-    - develop
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.immergis.fr:4567
   script:
