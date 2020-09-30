@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { GoBack, GoForward } from '../../store';
 import { radiansToDegrees } from './../../../shared/utils/angle-conversion';
@@ -9,14 +9,14 @@ import { ViewParams } from './../../models/panorama.model';
   templateUrl: './back-forward.component.html',
   styleUrls: ['./back-forward.component.scss'],
 })
-export class BackForwardComponent implements OnInit {
+export class BackForwardComponent implements OnChanges {
   @Input() params: ViewParams | null;
   @Input() disabled = false;
   lookBack = false;
 
   constructor(private store: Store) {}
 
-  ngOnInit() {
+  ngOnChanges(): void {
     if (this.params) {
       const angle = radiansToDegrees(this.params.yaw);
       if (angle < 90 && angle > -90) {

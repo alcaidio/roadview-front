@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --aot",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker:image:dev": "docker pull gitlab.immergis.fr:4567/osiris/roadview-front/dev:latest",
+    "docker:run:dev": "docker run -it --rm -d -p 4201:80 --name roadview-front gitlab.immergis.fr:4567/osiris/roadview-front/dev:latest",
+    "docker:stop:dev": "docker stop roadview-front"
   },
   "private": true,
   "dependencies": {
