@@ -11,6 +11,7 @@ import {
   ViewState,
 } from '../../store';
 import { ID } from './../../../shared/models/id.model';
+import { degreesToRadians } from './../../../shared/utils/angle-conversion';
 import { debounce } from './../../../shared/utils/event-listener';
 import { ViewParams } from './../../models/panorama.model';
 
@@ -71,7 +72,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       viewConfig = {
         yaw: params.yaw,
         pitch: params.pitch,
-        fov: params.fov === 0 ? 120 : params.fov,
+        fov: params.fov === 0 ? degreesToRadians(50) : params.fov,
       };
     });
     return this.marzipano.loadScene(

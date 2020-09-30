@@ -21,8 +21,8 @@ export class MarzipanoService {
   };
   defaultSceneLevels = [{ width: 1024 }, { width: 2048 }, { width: 4096 }];
   limiter = Marzipano.RectilinearView.limit.vfov(
-    degreesToRadians(25),
-    degreesToRadians(105)
+    degreesToRadians(10), // max zoom
+    degreesToRadians(65) // min zoom
   );
 
   constructor() {}
