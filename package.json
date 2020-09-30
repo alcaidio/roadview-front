@@ -27,6 +27,7 @@
     "@angular/router": "~9.1.7",
     "@asymmetrik/ngx-leaflet": "^8.1.0",
     "@ngxs/devtools-plugin": "^3.7.0",
+    "@ngxs/logger-plugin": "^3.7.0",
     "@ngxs/router-plugin": "^3.7.0",
     "@ngxs/storage-plugin": "^3.7.0",
     "@ngxs/store": "^3.7.0",

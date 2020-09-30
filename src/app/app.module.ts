@@ -62,10 +62,12 @@ export class CustomRouterStateSerializer
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production,
     }),
+    // NgxsLoggerPluginModule.forRoot({
+    //   disabled: environment.production,
+    // }),
     NgxsStoragePluginModule.forRoot({
       key: ['auth.user', 'app.theme'],
     }),
-    NgxsModule.forFeature([AppState]),
     AppRoutingModule,
   ],
   providers: [

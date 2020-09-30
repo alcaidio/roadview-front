@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Navigate } from '@ngxs/router-plugin';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
@@ -15,7 +15,7 @@ import {
 } from './auth.actions';
 
 const defaultAuthState: AuthStateModel = {
-  user: null,
+  user: undefined,
   loading: false,
   error: null,
 };
@@ -28,7 +28,11 @@ const defaultAuthState: AuthStateModel = {
 })
 @Injectable()
 export class AuthState {
-  constructor(private afAuth: AngularFireAuth, private snack: SnackService) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private snack: SnackService,
+    private ref: ApplicationRef
+  ) {}
 
   @Selector()
   static isAuth(state: AuthStateModel) {
@@ -103,6 +107,7 @@ export class AuthState {
     });
     ctx.dispatch(new Navigate(['/viewer']));
     this.snack.connected();
+    this.ref.tick();
   }
 
   @Action(LoginFailed)
@@ -125,5 +130,6 @@ export class AuthState {
     ctx.setState(defaultAuthState);
     ctx.dispatch(new Navigate(['/home']));
     this.snack.disconnected();
+    this.ref.tick();
   }
 }

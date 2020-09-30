@@ -8,7 +8,7 @@ import { PageComponent } from './components/page/page.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { GoogleSigninDirective } from './shared/google-signin.directive';
-import { AuthState } from './store/auth.state';
+import { AuthStates } from './store/index';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { AuthState } from './store/auth.state';
   ],
   imports: [
     CommonModule,
-    NgxsModule.forFeature([AuthState]),
+    NgxsModule.forFeature(AuthStates),
     SharedModule,
     AuthRoutingModule,
   ],

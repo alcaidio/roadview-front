@@ -5,7 +5,7 @@ import {
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 // TODO : add admin route (dashboard for example)
 const adminOnly = () => hasCustomClaim('admin');
@@ -35,7 +35,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       initialNavigation: 'enabled',
-      // preloadingStrategy: PreloadAllModules,
+      preloadingStrategy: PreloadAllModules,
     }),
   ],
   exports: [RouterModule],

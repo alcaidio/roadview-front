@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ToggleTheme } from 'src/app/app.state';
 import { User } from 'src/app/auth/model/auth.model';
-import { Logout } from './../../../auth/store/auth.actions';
+import { Logout } from 'src/app/auth/store';
 
 @Component({
   selector: 'app-shell',
