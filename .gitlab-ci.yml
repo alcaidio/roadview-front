@@ -1,10 +1,16 @@
 stages:
-  - buildDev
-  - packageDev
+  - build-prod
+  - package-develop
+  - package-tags
+  - package-master
 
-build:
-  stage: buildDev
+build-prod:
+  stage: build-prod
   image: node:latest
+  only:
+    - develop
+    - master
+    - tags
   script:
     - npm install -g @angular/cli@9.1.6
     - npm install
@@ -17,15 +23,44 @@ build:
     paths:
       - node_modules/
 
-package:
+package-develop:
+  stage: package-develop
   only:
     - develop
-  stage: packageDev
   image: docker:stable
   services:
     - docker:dind
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.immergis.fr:4567
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build -t gitlab.immergis.fr:4567/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/dev:latest .
-    - docker push gitlab.immergis.fr:4567/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/dev:latest
+    - docker pull $CI_REGISTRY_IMAGE/develop:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/develop:latest --tag $CI_REGISTRY_IMAGE/develop:latest .
+    - docker push $CI_REGISTRY_IMAGE/develop:latest
+
+package-tags:
+  stage: package-tags
+  only:
+    - tags
+  image: docker:stable
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE/develop:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/develop:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+package-master:
+  stage: package-master
+  only:
+    - master
+  services:
+    - docker:dind
+  image: docker:stable
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
