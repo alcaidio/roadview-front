@@ -1,0 +1,55 @@
+// Import material theming functions
+@import "~@angular/material/theming";
+
+$custom-orange: (
+  50: #fff3e0,
+  100: #ffe0b2,
+  200: #ffcc80,
+  300: #ffb74d,
+  400: #ffa726,
+  500: #ff9800,
+  600: #fb8c00,
+  700: #f57c00,
+  800: #ef6c00,
+  900: #e65100,
+  A100: #ffd180,
+  A200: #ffab40,
+  A400: #ff9100,
+  A700: #ff6d00,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  ),
+);
+
+// LIGHT THEME
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary: mat-palette($custom-orange);
+$app-accent: mat-palette($mat-green, A200, A100, A400);
+$app-warn: mat-palette($mat-red);
+// Create your Sass color vars (will be available in all the project)
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+
+// DARK THEME
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary-dark: mat-palette($custom-orange);
+$app-accent-dark: mat-palette($mat-green, A200, A100, A400);
+$app-warn-dark: mat-palette($mat-red);
+// Create your Sass color vars (will be available in all the project)
+$primary-dark: mat-color($app-primary-dark);
+$accent-dark: mat-color($app-accent-dark);
+$warn-dark: mat-color($app-warn-dark);
