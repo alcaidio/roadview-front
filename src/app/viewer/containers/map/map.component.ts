@@ -73,19 +73,19 @@ export class MapComponent implements OnInit, OnDestroy {
 
     cameraOptions = {
       icon: icon({
-        iconUrl: 'assets/img/red2.png',
-        iconSize: [35, 35],
+        iconUrl: 'assets/img/camera.svg',
+        iconSize: [60, 60],
+        className: 'camera',
       }),
       rotationOrigin: 'center center',
-      opacity: 0.7,
     };
 
     const createPoint = (feature, latlng) => {
       return marker(latlng, {
         icon: icon({
-          iconUrl: 'assets/img/red.png',
+          iconUrl: 'assets/img/point.svg',
           iconSize: [10, 10],
-          className: 'camera'
+          className: 'point',
         }),
       });
     };

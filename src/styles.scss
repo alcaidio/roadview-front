@@ -1,5 +1,4 @@
 @import "leaflet/dist/leaflet.css";
-
 @import "./styles/custom-theme";
 
 html,
@@ -21,8 +20,8 @@ a {
   display: flex;
   border-radius: 50%;
   padding: 10px;
-  background: #ec593f;
-  border: 1px solid #af412e;
+  background: $primary;
+  border: 1px solid $warn;
   align-items: center;
   justify-content: center;
   color: white;
