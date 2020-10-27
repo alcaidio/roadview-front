@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   api: {
-    imerview: 'http://192.168.0.187:3000/api/v1',
+    imerview: 'http://51.68.127.204:3000/api/v1',
   },
   mapbox: {
     token:
